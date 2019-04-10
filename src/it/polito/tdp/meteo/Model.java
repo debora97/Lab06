@@ -5,8 +5,10 @@ import java.util.*;
 
 import it.polito.tdp.meteo.bean.Citta;
 import it.polito.tdp.meteo.bean.SimpleCity;
+import it.polito.tdp.meteo.db.MeteoDAO;
 
 public class Model {
+	MeteoDAO dao= new MeteoDAO();
 
 	private final static int COST = 100;
 	private final static int NUMERO_GIORNI_CITTA_CONSECUTIVI_MIN = 3;
@@ -19,6 +21,9 @@ public class Model {
 	public Model() {
 
 	}
+	
+	// metodo che ti rimanda una lista di tutti i rilevamenti  di tutti i primi giorni del mese  
+	// metodo che mi rimanda una lista di rilevamenti con m t g di quel determinato giorno
 
 	public String getUmiditaMedia(int mese) {
 		//punto1) 
@@ -37,8 +42,8 @@ public class Model {
 	}
 
 	private void cerca(List<Citta> parziale, int L, int mese) {
-		// casi terminali 
 		int punteggio=punteggioSoluzione(parziale);
+		// casi terminali 
 		//reggiunte 15 citta
 		if(parziale.size()==NUMERO_GIORNI_TOTALI) {
 			//controllo se la soluzione mi conviene 
@@ -52,19 +57,23 @@ public class Model {
 			return;
 		}
 		
-	
 		
-		//condizioni
-		
-		//una città e' presente più di 6 volte 
-		
+		// condizioni
+
+		// una città e' presente più di 6 volte
+
 		// il punteggio è maggiore del punteggio_best
 		//minimo 3 giorni di fila in una citta
-		cerca(parziale, L+1, mese);
+		
+		
+		if(controllaParziale(parziale)==true) {
+			cerca(parziale, L+1, mese);
 		//provo ad aggiungere 
 		parziale.add(citta.get(L));
 		cerca(parziale, L+1, mese);
 		parziale.remove(citta.get(L));//backtracking
+		}
+		
 		
 	}
 
@@ -89,7 +98,7 @@ public class Model {
 	}
 
 	private boolean controlloMinimo(List<Citta> parziale) {
-		for(int i=0; i<citta.size(); i++) {
+		for(int i=0; i<citta.size()-1; i++) {
 			int cont=0;
 			int j=i;
 			while(parziale.get(j+1).getNome().compareTo(parziale.get(j).getNome())==0) {

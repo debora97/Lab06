@@ -40,13 +40,71 @@ public class MeteoDAO {
 	}
 
 	public List<Rilevamento> getAllRilevamentiLocalitaMese(int mese, String localita) {
+		
+		// voglio solo i primi 15 giorni 
+           final String sql = "SELECT Localita, Data, Umidita " + 
+           		"FROM situazione " + 
+           		"WHERE  localita=? AND MONTH(DATA)=? " + 
+           		" ORDER BY data ASC ";
+          
 
-		return null;
+		List<Rilevamento> rilevamenti = new ArrayList<Rilevamento>();
+
+		try {
+			Connection conn = DBConnect.getInstance().getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			 st.setInt(1, mese);
+			 st.setString(2, localita);
+
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+
+				Rilevamento r = new Rilevamento(rs.getString("Localita"), rs.getDate("Data"), rs.getInt("Umidita"));
+				rilevamenti.add(r);
+			}
+
+			conn.close();
+			return rilevamenti;
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} 
+		
 	}
 
 	public Double getAvgRilevamentiLocalitaMese(int mese, String localita) {
+		  final String sql = "SELECT AVG(umidita) as U " + 
+		  		"FROM situazione " + 
+		  		"WHERE  localita=? AND MONTH(DATA)=? " + 
+		  		" ORDER BY data ASC ";
+	          
 
-		return 0.0;
+			Double media=0.0;
+
+			try {
+				Connection conn = DBConnect.getInstance().getConnection();
+				PreparedStatement st = conn.prepareStatement(sql);
+				 st.setInt(1, mese);
+				 st.setString(2, localita);
+
+				ResultSet rs = st.executeQuery();
+
+				while (rs.next()) {
+
+					media=rs.getDouble("U");
+				}
+
+				conn.close();
+				return media;
+
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			} 
 	}
 
 }
