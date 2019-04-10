@@ -26,9 +26,10 @@ public class Model {
 	// metodo che mi rimanda una lista di rilevamenti con m t g di quel determinato giorno
 
 	public String getUmiditaMedia(int mese) {
-		//punto1) 
+		String medie="";
+		medie="Torino: "+dao.getAvgRilevamentiLocalitaMese(mese, "Torino")+"\n"+"Milano: "+dao.getAvgRilevamentiLocalitaMese(mese, "Milano")+"\n"+"Genova: "+dao.getAvgRilevamentiLocalitaMese(mese, "Genova");
 
-		return "TODO!";
+		return medie;
 	}
 
 	public List<Citta> trovaSequenza(int mese) {

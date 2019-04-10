@@ -87,8 +87,9 @@ public class MeteoDAO {
 			try {
 				Connection conn = DBConnect.getInstance().getConnection();
 				PreparedStatement st = conn.prepareStatement(sql);
-				 st.setInt(1, mese);
-				 st.setString(2, localita);
+				 
+				 st.setString(1, localita);
+				 st.setInt(2, mese);
 
 				ResultSet rs = st.executeQuery();
 
