@@ -20,9 +20,9 @@ public class Model {
 	private int punteggio_best;
 	List<Citta> allCitta = new ArrayList<>(dao.getAllCitta());
 
-	/*public Model() {
+	public Model() {
 
-	}*/
+	}
 
 	// metodo che ti rimanda una lista di tutti i rilevamenti di tutti i primi
 	// giorni del mese

@@ -8,10 +8,10 @@ public class TestModel {
 
 		Model m = new Model();
 		
-		//System.out.println(m.getUmiditaMedia(Month.DECEMBER));
+		System.out.println(m.getUmiditaMedia(Month.DECEMBER));
 		
 		System.out.println(m.trovaSequenza(Month.JANUARY));
-		
+	//	System.out.println(Month.DECEMBER);
 //		System.out.println(m.trovaSequenza(4));
 	}
 
